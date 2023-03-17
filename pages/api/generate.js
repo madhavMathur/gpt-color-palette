@@ -15,11 +15,11 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const userInput = req.body.userInput || '';
+  if (userInput.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a valid phrase",
       }
     });
     return;
@@ -28,10 +28,29 @@ export default async function (req, res) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
-      temperature: 0.6,
+      prompt: generatePrompt(userInput),
+      temperature: 0.3,
+
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+
+    // extract hex codes from generated text
+    const hexRegex = /#(?:[0-9a-fA-F]{3}){1,6}/g;
+    console.log(completion.data.choices[0].text)
+    const hexCodes = completion.data.choices[0].text.match(hexRegex);
+
+    // check if hexCodes is null or undefined
+    if (hexCodes) {
+      // log the hex codes
+      console.log(hexCodes);
+      res.status(200).json({ result: hexCodes });
+    } else {
+      console.log("No hex codes found in generated text.");
+      res.status(500).json({
+        error: {
+          message: 'An error occurred during your request.',
+        }
+      });
+    }
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -48,15 +67,6 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+function generatePrompt(userInput) {
+  return `"Generate hex color codes that describe the input phrase: ${userInput}."`;
 }
