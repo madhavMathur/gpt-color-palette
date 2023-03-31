@@ -1,9 +1,6 @@
-# OpenAI API Quickstart - Node.js example app
+# GPT-4 powered Color Palettes
 
-This is an example pet name generator app used in the OpenAI API [quickstart tutorial](https://platform.openai.com/docs/quickstart). It uses the [Next.js](https://nextjs.org/) framework with [React](https://reactjs.org/). Check out the tutorial or follow the instructions below to get set up.
-
-![Text box that says name my pet with an icon of a dog](https://user-images.githubusercontent.com/10623307/213887080-b2bc4645-7fdb-4dbd-ae42-efce00d0dc29.png)
-
+Analyzes a text prompt and returns a fitting palette of colors, using [OpenAI's API](https://platform.openai.com/docs/quickstart) to run GPT-4 and [tinycolor's API](https://github.com/TinyCommunity/tinycolor2) to manipulate color hues. It uses the [Next.js](https://nextjs.org/) framework with [React](https://reactjs.org/). You can follow the instructions below to get set up.
 
 ## Setup
 
@@ -41,4 +38,4 @@ This is an example pet name generator app used in the OpenAI API [quickstart tut
    $ npm run dev
    ```
 
-You should now be able to access the app at [http://localhost:3000](http://localhost:3000)! For the full context behind this example app, check out the [tutorial](https://platform.openai.com/docs/quickstart).
+You should now be able to access the app at [http://localhost:3000](http://localhost:3000)!
